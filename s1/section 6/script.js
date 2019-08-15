@@ -71,7 +71,7 @@ const UIController = (() => {
             return {
                 type: document.querySelector(DOMstrings.inputType).value,
                 description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value,
+                value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
             };
         },
 
@@ -144,6 +144,14 @@ const controller = ((dataCtrl, UICtrl) => {
         });
     };
 
+    let updateData = () => {
+        //посчитать бюджет
+
+        //вернуть бюджет
+
+        //вывести бюджет в UI
+    }
+
     let ctrlAddItem = () => {
         let input;
         let newItem;
@@ -151,19 +159,19 @@ const controller = ((dataCtrl, UICtrl) => {
         //Взять данные из инпута
         input = UICtrl.getInput();
 
-        //добавить елементы в dataController
-        newItem = dataCtrl.addItem(input.type, input.description, input.value);
+        if (input.description !== '' && !isNaN(input.value) && input.value !== 0 ) {
+            //добавить елементы в dataController
+            newItem = dataCtrl.addItem(input.type, input.description, input.value);
 
-        //добавить елементы в UI
-        UIController.addListItem(newItem, input.type);
+            //добавить елементы в UI
+            UIController.addListItem(newItem, input.type);
 
-        //очистить все инпуты
-        UIController.clearFields();
+            //очистить все инпуты
+            UIController.clearFields();
 
-        //посчитать(сложить) данные
-
-        //вывести на экран данные в UI
-
+            //посчитать и вывести на экран данные в UI
+            updateData();
+        }
     };
 
     return {
