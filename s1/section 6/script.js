@@ -12,6 +12,14 @@ const dataController = (() => {
         this.value = value;
     };
 
+    calculateTotal = (type) => {
+        let sum = 0;
+        data.allItems[type].forEach((el) => {
+            sum += el.value;
+        });
+        data.totals[type] = sum;
+    };
+
     let data = {
         allItems: {
             exp: [],
@@ -20,7 +28,9 @@ const dataController = (() => {
         totals: {
             exp: 0,
             inc: 0
-        }
+        },
+        budget: 0,
+        percentage: 0
     }
 
     return {
@@ -47,6 +57,31 @@ const dataController = (() => {
 
             // вернули новый елемент
             return newItem;
+        },
+
+        calculateData: () => {
+            //вычислить total exp и total inc
+            calculateTotal('exp');
+            calculateTotal('inc');
+
+            //inc отнять exp
+            data.budget = data.totals.inc - data.totals.exp;
+
+            //вычислить процент
+            if (data.totals.inc > 0) {
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            } else {
+                data.percentage = -1;
+            }
+        },
+
+        getBudget: () => {
+            return {
+                buget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            };
         },
 
         testing: () => {
@@ -146,10 +181,13 @@ const controller = ((dataCtrl, UICtrl) => {
 
     let updateData = () => {
         //посчитать бюджет
+        dataCtrl.calculateData();
 
         //вернуть бюджет
+        let budget = dataCtrl.getBudget();
 
         //вывести бюджет в UI
+        console.log(budget);
     }
 
     let ctrlAddItem = () => {
