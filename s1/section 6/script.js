@@ -56,8 +56,10 @@ const controller = ((dataCtrl, UICtrl) => {
 
     return {
         init: () => {
-            console.log('')
+            console.log('Application sterted.');
         }
-    }
+    };
 
 })(dataController, UIController);
+
+controller.init();
