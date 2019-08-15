@@ -33,8 +33,8 @@ const controller = ((dataCtrl, UICtrl) => {
 
     const ctrlAddItem = () => {
         //Взять данные из инпута
-        let obj1 = UIController.getInput();
-        console.log(obj1);
+        let objInput = UIController.getInput();
+        console.log(objInput);
 
         //добавить елементы в dataController
 
