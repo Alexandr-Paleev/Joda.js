@@ -108,8 +108,19 @@ const UIController = (() => {
         },
 
         clearFields: () => {
-            document.querySelectorAll(`${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`);
-        }
+            let fields;
+            let fieldsArr;
+
+            fields = document.querySelectorAll(`${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`);
+
+            fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach((el) => {
+                el.value = '';
+            });
+
+            fieldsArr[0].focus();
+        },
 
         getDOMstrings: () => {
             return DOMstrings;
@@ -145,6 +156,9 @@ const controller = ((dataCtrl, UICtrl) => {
 
         //добавить елементы в UI
         UIController.addListItem(newItem, input.type);
+
+        //очистить все инпуты
+        UIController.clearFields();
 
         //посчитать(сложить) данные
 
