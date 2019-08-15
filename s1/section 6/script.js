@@ -1,5 +1,59 @@
 const dataController = (() => {
 
+    let Expense = function(id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+    
+    let Income = function(id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    let data = {
+        allItems: {
+            exp: [],
+            inc: []
+        },
+        totals: {
+            exp: 0,
+            inc: 0
+        }
+    }
+
+    return {
+        addItem: (type, des, val) => {
+            let newItem;
+            let ID;
+
+            // присвоили id последнему елементу
+            if (data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                ID = 0;
+            }
+
+            // создали новый елемент
+            if (type === 'exp') {
+                newItem = new Expense(ID, des, val);
+            } else if (type === 'inc') {
+                newItem = new Income(ID, des,val);
+            }
+
+            // добавили новый елемент в конец мвссива 'inc' или 'exp'
+            data.allItems[type].push(newItem);
+
+            // вернули новый елемент
+            return newItem;
+        },
+
+        testing: () => {
+            console.log(data);
+        }
+    };
+
 })();
 
 const UIController = (() => {
@@ -42,11 +96,14 @@ const controller = ((dataCtrl, UICtrl) => {
     };
 
     let ctrlAddItem = () => {
+        let input;
+        let newItem;
+
         //Взять данные из инпута
-        let objInput = UICtrl.getInput();
-        console.log(objInput);
+        input = UICtrl.getInput();
 
         //добавить елементы в dataController
+        newItem = dataCtrl.addItem(input.type, input.description, input.value);
 
         //добавить елементы в UI
 
