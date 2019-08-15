@@ -29,11 +29,21 @@ const UIController = (() => {
 
 const controller = ((dataCtrl, UICtrl) => {
 
-    const DOM = UICtrl.getDOMstrings();
+    let setupEventListeners = () => {
+        let DOM = UICtrl.getDOMstrings();
 
-    const ctrlAddItem = () => {
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress', (event) => {
+            if (event.keyCode === 13 || event.which === 13) {
+                ctrlAddItem();
+            }
+        });
+    };
+
+    let ctrlAddItem = () => {
         //Взять данные из инпута
-        let objInput = UIController.getInput();
+        let objInput = UICtrl.getInput();
         console.log(objInput);
 
         //добавить елементы в dataController
@@ -44,19 +54,12 @@ const controller = ((dataCtrl, UICtrl) => {
 
         //вывести на экран данные в UI
 
-    }
-
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
-
-    document.addEventListener('keypress', (event) => {
-        if (event.keyCode === 13 || event.which === 13) {
-            ctrlAddItem();
-        }
-    });
+    };
 
     return {
         init: () => {
             console.log('Application sterted.');
+            setupEventListeners();
         }
     };
 
