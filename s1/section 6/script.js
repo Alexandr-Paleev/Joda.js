@@ -4,6 +4,19 @@ const dataController = (() => {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;
+    };
+
+    Expense.prototype.calcPercentage = function(totalIncome) {
+        if (totalIncome) {
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        } else {
+            this.percentage = -1;
+        }
+    };
+
+    Expense.prototype.getPercentage = function() {
+        return this.percentage;
     };
     
     let Income = function(id, description, value) {
@@ -31,7 +44,7 @@ const dataController = (() => {
         },
         budget: 0,
         percentage: 0
-    }
+    };
 
     return {
         addItem: (type, des, val) => {
@@ -90,6 +103,19 @@ const dataController = (() => {
             }
         },
 
+        calculatePercentages: () => {
+            data.allItems.exp.forEach((cur) => {
+                cur.calcPercentage(data.totals.inc);
+            });
+        },
+
+        getPercentages: () => {
+            let allPerc = data.allItems.exp.map((cur) => {
+                return cur.getPercentage();
+            });
+            return allPerc;
+        },
+
         getBudget: () => {
             return {
                 budget: data.budget,
@@ -118,7 +144,8 @@ const UIController = (() => {
         incomeLabel: '.budget__income--value',
         expensesLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
-        container: '.container'
+        container: '.container',
+        expensesPercLabel: '.item__percentage'
     };
     
     return {
@@ -195,6 +222,25 @@ const UIController = (() => {
             }
         },
 
+        displayPercentages: (percentages) => {
+            
+            let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
+
+            let nodeListForEach = (list, callback) => {
+                for (let i = 0; i < list.length; i++) {
+                    callback(list[i], i);
+                }
+            };
+
+            nodeListForEach(fields, (current, index) => {
+                if (percentages[index] > 0) {
+                    current.textContent = percentages[index] + '%';
+                } else {
+                    current.textContent = '---';
+                }                
+            });
+        },
+
         getDOMstrings: () => {
             return DOMstrings;
         }
@@ -228,7 +274,18 @@ const controller = ((dataCtrl, UICtrl) => {
 
         //вывести бюджет в UI
         UICtrl.displayBudget(budget);
-    }
+    };
+
+    let updatePercentages = () => {
+        // вычислить процент
+        dataCtrl.calculatePercentages();
+
+        // прочитать процент для data controller
+        let percentages = dataCtrl.getPercentages();
+
+        // обновить UI с новым процентом
+        UICtrl.displayPercentages(percentages);
+    };
 
     let ctrlAddItem = () => {
         let input;
@@ -249,6 +306,9 @@ const controller = ((dataCtrl, UICtrl) => {
 
             //посчитать и вывести на экран данные в UI
             updateData();
+
+            //посчитать и обновить процент
+            updatePercentages();
         }
     };
 
@@ -274,6 +334,9 @@ const controller = ((dataCtrl, UICtrl) => {
 
             //обновить UI и показать новый бюджет
             updateData();
+
+            //посчитать и обновить процент
+            updatePercentages();
 
         }
 
