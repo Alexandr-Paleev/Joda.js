@@ -227,6 +227,9 @@ const UIController = (() => {
 
             fields = document.querySelectorAll(`${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`);
 
+            //делаем NodeList и сразу превращаем его в массив
+            // let filArr = [...(document.querySelectorAll(`${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`))];
+
             fieldsArr = Array.prototype.slice.call(fields);
 
             fieldsArr.forEach((el) => {
