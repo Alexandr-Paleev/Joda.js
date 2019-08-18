@@ -606,3 +606,22 @@ const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
 johnAthlete6.wonMedal();
 johnAthlete6.calculateAge();
 */
+
+//solution Task
+
+class Element {
+    constructor(name, buildYear) {
+        this.name = name;
+        this.buildYear = buildYear;
+    }
+}
+
+class Park extends Element {
+    constructor(name, buildYear, area, numTreess) {
+        super(name, buildYear);
+        this.area = area;
+        this.numTreess = numTreess;
+    }
+
+    
+}
