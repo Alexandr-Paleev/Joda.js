@@ -617,14 +617,14 @@ class Element {
 }
 
 class Park extends Element {
-    constructor(name, buildYear, area, numTreess) {
+    constructor(name, buildYear, area, numTrees) {
         super(name, buildYear);
         this.area = area;
-        this.numTreess = numTreess;
+        this.numTrees = numTrees;
     }
     
     treeDensity() {
-        const density = this.numTreess / this.area;
+        const density = this.numTrees / this.area;
         console.log(`${this.name} has a tree density of ${density} trees per square km.`);
 
     }    
@@ -648,11 +648,25 @@ class Street extends Element {
     }
 }
 
-const allParks = [new Park('Green Park', 1987, 0.2, 215),
-                new Park('National Park', 1894, 2.9, 3541),
-                new Park('Oak', 1953, 0.4, 949)];
+const allParks = [new Park('Green Park', 1987, 0.2, 215), new Park('National Park', 1894, 2.9, 3541), new Park('Oak', 1953, 0.4, 949)];
 
-const allStreets = [new Street('Ocean Avenue', 1999, 1.1, 4),
-                    new Street('Evergreen Street', 2008, 2.7, 2),
-                    new Street('4th Street', 2015, 0.8),
-                    new Street('Sunset Boulevard', 1982, 2.5, 5)];
+const allStreets = [new Street('Ocean Avenue', 1999, 1.1, 4), new Street('Evergreen Street', 2008, 2.7, 2), new Street('4th Street', 2015, 0.8), new Street('Sunset Boulevard', 1982, 2.5, 5)];
+
+function reportParks(p) {
+
+    console.log('-----PARKS REPORT-----');
+    // плотность
+    p.forEach(el => el.treeDensity());
+
+    // средний возраст
+
+    // в каком парке больше 1000 деревьев
+
+}
+
+function reportStreets(s) {
+
+}
+
+reportParks(allParks);
+reportStreets(allStreets);
