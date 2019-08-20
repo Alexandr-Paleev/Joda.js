@@ -652,13 +652,23 @@ const allParks = [new Park('Green Park', 1987, 0.2, 215), new Park('National Par
 
 const allStreets = [new Street('Ocean Avenue', 1999, 1.1, 4), new Street('Evergreen Street', 2008, 2.7, 2), new Street('4th Street', 2015, 0.8), new Street('Sunset Boulevard', 1982, 2.5, 5)];
 
+function calc() {
+
+    const sum = arr.reduce((prev, cur, index) => prev + current, 0);
+
+     retrun [sum, sum / arr.length];
+}
+
 function reportParks(p) {
 
     console.log('-----PARKS REPORT-----');
+
     // плотность
     p.forEach(el => el.treeDensity());
 
     // средний возраст
+    const ages = p.map(el => 2016 - el.buildYear);
+    const [totalAge, avgAge] = calc(ages);
 
     // в каком парке больше 1000 деревьев
 
