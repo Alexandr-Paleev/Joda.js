@@ -7,10 +7,30 @@ eXtensible Murcup Language
 ## XHML
 Extensible Hypertext Markup Language
 
-some basic git commands
+element HTML this is:
 ```
-git status
-git add
-git commit
+<tag/>
+ or 
+<tag><tag/>
 ```
+
+tags are case-insensitive but it is customary to write in small letters
+
+
+tags can be nested in other tags
+
+tags attributes: 
+```
+class
+id
+type
+name
+...
+```
+code comments:
+```
+<!--commit-->
+```
+
+
 
