@@ -652,19 +652,43 @@ const allParks = [new Park('Green Park', 1987, 0.2, 215), new Park('National Par
 
 const allStreets = [new Street('Ocean Avenue', 1999, 1.1, 4), new Street('Evergreen Street', 2008, 2.7, 2), new Street('4th Street', 2015, 0.8), new Street('Sunset Boulevard', 1982, 2.5, 5)];
 
+function calc() {
+
+    const sum = arr.reduce((prev, cur, index) => prev + cur, 0);
+
+     retrun [sum, sum / arr.length];
+}
+
 function reportParks(p) {
 
     console.log('-----PARKS REPORT-----');
+
     // плотность
     p.forEach(el => el.treeDensity());
 
     // средний возраст
+    const ages = p.map(el => new Date().getFullYear() - el.buildYear);
+    const [totalAge, avgAge] = calc(ages);
+    console.log(`Our ${p.length} parcs have an average of ${avgAge} years.`);
 
     // в каком парке больше 1000 деревьев
+    const i = p.map(el => el.numTrees).findIndex(el => el >= 1000);
+    console.log(`${p[i].name} has more than 1000 trees.`);
 
 }
 
 function reportStreets(s) {
+
+    console.log('-----STREETS REPORT-----');
+
+    // общая длинна городских улиц
+    const [totalLength, avgLength] = calc(s.map(el => el.length));
+    console.log(`Our ${s.length} streets have a total length of ${totalLength} 
+    km, with an average of ${avgLength} km.`);
+    
+
+    // класификация рызмеров
+    s.forEach(el => el.classifyStreet());
 
 }
 
